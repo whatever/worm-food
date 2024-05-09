@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>i wanna be your joey ramone</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/pool-water.bundled.js"></script>
+    <script src="/dat.gui.min.js"></script>
+  </head>
+  <body>
+    <canvas width=600 height=600 id="looks-cool" class="app"></canvas>
+    <script>
+      var el = document.getElementById("looks-cool");
+      var app = new svv.WorldShadowGovernmentApp({el: el});
+
+      (function loop() {
+        requestAnimationFrame(loop);
+        app.update(+new Date());
+        app.draw();
+      }());
+
+      function fill() {
+        let w = document.documentElement.clientWidth;
+        let h = document.documentElement.clientHeight;
+        app.setSize(w, h);
+      }
+
+      fill();
+
+      window.addEventListener("resize", fill);
+
+      fill();
+
+      let params = {
+        exposure: 0.9999,
+        bloomThreshold: 0.0001,
+        bloomStrength: 1.5,
+        bloomRadius: 0.0001,
+        outsiderView: true,
+        bloom: true,
+        hot: 0.0001,
+        cold: 0.0001,
+        distance: 0.4,
+      };
+
+      function restoreParams() {
+        let p = localStorage.getItem("params");
+
+        if (p === null) {
+          return;
+        }
+
+        let parsed = JSON.parse(p);
+
+        console.log(typeof params)
+
+        for (const [k, v] of Object.entries(parsed)) {
+          params[k] = v;
+        }
+      }
+
+      function saveParams() {
+        localStorage.setItem("params", JSON.stringify(params));
+      }
+
+
+      window.addEventListener("load", function () {
+
+        restoreParams();
+
+        app.tweak(params);
+
+        let gui = new dat.GUI();
+
+        gui.close();
+
+        gui.add(params, "bloom").onChange(function (value) {
+          app.tweak(params);
+          saveParams();
+        });
+
+        gui.add(params, "outsiderView").onChange(function (value) {
+          app.tweak(params);
+          saveParams();
+        });
+
+        gui.add(params, "exposure", 0.1, 2 ).onChange(function ( value ) {
+          app.tweak(params);
+          saveParams();
+        });
+
+        gui.add(params, "bloomThreshold", 0.0, 1.0 ).onChange(function (value) {
+          app.tweak(params);
+          saveParams();
+        } );
+
+        gui.add( params, "bloomStrength", 0.0, 3.0 ).onChange(function (value) {
+          app.tweak(params);
+          saveParams();
+        });
+
+        gui.add(params, "bloomRadius", 0.0, 1.0 ).step( 0.01 ).onChange(function ( value ) {
+          app.tweak(params);
+          saveParams();
+        });
+
+        gui.add(params, "cold", 0.0, 4.0 ).step( 0.01 ).onChange(function ( value ) {
+          app.tweak(params);
+          saveParams();
+        });
+
+        gui.add(params, "hot", 0.0, 4.0 ).step( 0.01 ).onChange(function ( value ) {
+          app.tweak(params);
+          saveParams();
+        });
+
+        gui.add(params, "distance", 0.0, 4.0 ).step( 0.005 ).onChange(function ( value ) {
+          app.tweak(params);
+          saveParams();
+        });
+
+      });
+
+    </script>
+  </body>
+</html>
