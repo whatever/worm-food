@@ -1,16 +1,10 @@
 import * as THREE from "three";
 
-import {App} from "@pool-water/secret-sauce";
-
-export class Bas3d extends App {
+export class Bas3d {
   constructor({el}) {
-    super({el: el});
-
     this.el = el;
 
     this.clock = new THREE.Clock();
-
-    this.ctx = el.getContext("webgl", {preserveDrawingBuffer: true});
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: el,

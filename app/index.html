@@ -5,12 +5,13 @@
     <link rel="stylesheet" href="style.css">
     <script src="/pool-water.bundled.js"></script>
     <script src="/dat.gui.min.js"></script>
+    <script src="/ammo.wasm.js"></script>
   </head>
   <body>
     <canvas width=600 height=600 id="looks-cool" class="app"></canvas>
     <script>
       var el = document.getElementById("looks-cool");
-      var app = new svv.WorldShadowGovernmentApp({el: el});
+      var app = new svv.WormFoodPhysics({el: el});
 
       (function loop() {
         requestAnimationFrame(loop);
